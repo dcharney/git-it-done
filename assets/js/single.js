@@ -8,6 +8,7 @@ var getRepoIssues = function(repo) {
     fetch(apiUrl)
         .then(function(response) {
             //request was succesful
+            //console.log(response.ok);
             if (response.ok) {
                 response.json().then(function(data) {
                     // pass response data to dom function
@@ -19,7 +20,7 @@ var getRepoIssues = function(repo) {
                     }
                 });
             } else {
-                alert("There was a problem with your request!");
+                document.location.replace("./index.html");
             }
         });
 };
@@ -76,9 +77,13 @@ var displayWarning = function(repo) {
 var getRepoName = function() {
     var queryString = document.location.search;
     var repoName = queryString.split("=")[1];
-    getRepoIssues(repoName);
-    repoNameEl.textContent = repoName;
+    if (repoName) {
+        repoNameEl.textContent = repoName;
+        getRepoIssues(repoName);
+    } else {
+        document.location.replace("./index.html");
+    };
 ;}
 
 
-getRepoIssues(getRepoName());
+getRepoName();
